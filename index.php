@@ -110,21 +110,21 @@
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
-$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/initializr/proxy.php?url=http://www.benczuretterem.hu/", function (data) {
+$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.benczuretterem.hu/", function (data) {
   // data is the content of the URL.
 	$page = $(data);
 	$("#bencur").append($("#weekly-menu-content", $page));	
 });
-$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/initializr/proxy.php?url=http://www.piroskavendeglo.hu/", function (data) {
+$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/", function (data) {
   // data is the content of the URL.
 	$page = $(data);
 	$("#piroska").append($("article", $page));	
 	
 	var o_href = $("#piroska > article > a").attr('href');
-	$("#piroska > article > a").attr('href', "http://<?php echo $_SERVER['SERVER_NAME']; ?>/initializr/proxy.php?url=http://www.piroskavendeglo.hu/" + o_href);
+	$("#piroska > article > a").attr('href', "http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/" + o_href);
 	
 	var o_src = $("#piroska > article > a > img").attr('src');
-	$("#piroska > article > a > img").attr('src', "http://<?php echo $_SERVER['SERVER_NAME']; ?>/initializr/proxy.php?url=http://www.piroskavendeglo.hu/" + o_src);
+	$("#piroska > article > a > img").attr('src', "http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/" + o_src);
 	$("#piroska > article > a > img").removeAttr( "width" )
 });
 	
