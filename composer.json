@@ -1,0 +1,26 @@
+{
+    "name": "kaja-spider",
+ 
+    "config": {
+        "vendor-dir": "vendor/",
+        "component-dir": "app/webroot/assets"
+    },
+ 
+    "extra": {
+        "installer-paths": {
+        }
+    },
+ 
+    "require" :
+    {
+        "php": ">=5.3",
+        "components/jquery": "^1.11.0",
+        "flesler/jquery.scrollto": "dev-master",
+        "components/jqueryui": "^1.10.2"
+    },
+    
+    "require-dev" :
+    {
+        "anahkiasen/rocketeer": "^2.1"
+    }
+}

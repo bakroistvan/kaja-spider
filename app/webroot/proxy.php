@@ -2,10 +2,12 @@
 header('Access-Control-Allow-Origin: *');
  
 if (isset($_GET['url']) && preg_match('`^http://`', $_GET['url'])) {
-	
-	if (substr(strrchr($_GET['url'],'.'),1)) {
-		header('Content-Type: image/jpeg');
-	}
+
+	$file_info = new finfo(FILEINFO_MIME_TYPE);
+	$mime_type = $file_info->buffer(file_get_contents($_GET['url']));
+
+	header('Content-Type: ' . $mime_type);
+
 	echo file_get_contents($_GET['url']);
 }
 ?>
