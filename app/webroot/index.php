@@ -117,9 +117,45 @@
         <h1><a href="http://www.minietelbar.hu/" target="_blank">Mini Ételbár</a></h1>
         <img style="width: 100%;" src="http://www.minietelbar.hu/menu.jpg">
       </div>
-    </div>
+	  
+	  <div class="col col-md-4">
+        <h1><a href="https://www.facebook.com/pages/Krinet-gyors%C3%A9tterem-%C3%A9s-k%C3%A1v%C3%A9z%C3%B3/168988876483576" target="_blank">Krinet gyorsétterem</a></h1>
+        <!--<iframe width="400" height="400" style="border:none;" src="http://output60.rssinclude.com/output?type=iframe&amp;id=978925&amp;hash=3ed254af5b87b0f02392fb6ec89a04b0"></iframe>-->
+      <?php
+          require_once 'rss_php.php';
 
-      <hr>
+          $rss = new rss_php;
+          $rss->load('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576');
+          $items = $rss->getItems(); #returns all rss items
+      ?>
+          <h4><?php echo $items[0]['title']; ?></h4>
+          <div>
+            <?php echo $items[0]['description']; ?>
+          </div>
+  		</div>
+    </div>
+	
+	<div class="row">
+		<div class="col col-md-4">
+			<h1><a href="https://www.facebook.com/kefafalatozo" target="_blank">Kefa falatozó</a></h1>
+			<!--<iframe width="400" height="400" style="border:none;" src="http://output60.rssinclude.com/output?type=iframe&amp;id=978925&amp;hash=3ed254af5b87b0f02392fb6ec89a04b0"></iframe>-->
+		  <?php
+			  require_once 'rss_php.php';
+
+			  $rss = new rss_php;
+			  $rss->load('https://www.facebook.com/feeds/page.php?format=rss20&id=258345984251339');
+			  $items = $rss->getItems(); #returns all rss items
+		  ?>
+			  <h4><?php echo $items[0]['title']; ?></h4>
+			  <div>
+				<?php echo $items[0]['description']; ?>
+			  </div>
+  		</div>
+	</div>
+	
+	
+	
+    <hr>
 
       <footer>
         <p>&copy; Company 2015</p>
