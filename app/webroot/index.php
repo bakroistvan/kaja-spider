@@ -151,6 +151,11 @@
 				<?php echo $items[0]['description']; ?>
 			  </div>
   		</div>
+		
+		<div class="col col-md-4">
+  			<h1><a href="http://atriumetterem.hu/napi-menu/" target="_blank">Átrium étterem</a></h1>
+  			<div id="atrium"> </div>
+  		</div>
 	</div>
 	
 	
@@ -189,20 +194,16 @@ $.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.pi
 	$("#piroska > article > a > img").removeAttr( "width" )
 });
 
-$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok", function (data) {
+$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok/140-napi-ajanlatok-napfenyes-falatozo", function (data) {
   // data is the content of the URL.
   $page = $(data);
-  $("#napfenyes").append($(".napi_box1 > div > table", $page));
+  $("#napfenyes").append($(".article-content > table > tbody > tr > td:first", $page));
+});
 
-  $("#napfenyes > table").removeAttr("width");
-  $("#napfenyes > table td:last-child").remove();
-  $("#napfenyes > table td:last-child").remove();
-
-  $("#napfenyes").append($(".napi_box2 > table > tbody > tr > td > table", $page));
-
-  $("#napfenyes > table:eq(1)").removeAttr("width");
-  $("#napfenyes > table:eq(2)").remove();
-  $("#napfenyes > table:eq(2)").remove();
+$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://atriumetterem.hu/napi-menu/", function (data) {
+  // data is the content of the URL.
+	$page = $(data);
+	$("#atrium").append($("#post-19", $page));	
 });
 	
 
