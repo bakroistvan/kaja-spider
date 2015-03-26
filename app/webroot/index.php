@@ -89,7 +89,7 @@
       <!-- Example row of columns -->
     <div class="row">
   		<div class="col col-md-4">
-  			<h1><a href="http://www.piroskavendeglo.hu/" target="_blank">Piroska</a></h1>
+  			<h1><a href="http://www.piroskavendeglo.hu/etlap/" target="_blank">Piroska</a></h1>
   			<div id="piroska"> </div>
   		</div>
 
@@ -103,19 +103,27 @@
           $rss->load('https://www.facebook.com/feeds/page.php?id=116495811806493&format=rss20');
           $items = $rss->getItems(); #returns all rss items
       ?>
-          <div>
+          <h4><?php echo $items[0]['pubDate']; ?></h4>
+		  <div>
             <?php echo $items[0]['description']; ?>
           </div>
   		</div>
+		
+		<div class="col col-md-4">
+			<h1><a href="http://www.benczuretterem.hu/" target="_blank">Bencur</a></h1>
+			<div id="bencur"> </div>
+		  </div>	
 
-      <div class="col col-md-4">
-        <h1><a href="http://www.minietelbar.hu/" target="_blank">Mini Ételbár</a></h1>
-        <img style="width: 100%;" src="http://www.minietelbar.hu/menu.jpg">
-      </div>
+      
 
     </div>
 
     <div class="row">
+		<div class="col col-md-4">
+			<h1><a href="http://www.minietelbar.hu/" target="_blank">Mini Ételbár</a></h1>
+			<img style="width: 100%;" src="http://www.minietelbar.hu/menu.jpg">
+		  </div>
+		
       <div class="col col-md-4">
       <h1><a href="https://www.facebook.com/kefafalatozo" target="_blank">Kefa falatozó</a></h1>
       <!--<iframe width="400" height="400" style="border:none;" src="http://output60.rssinclude.com/output?type=iframe&amp;id=978925&amp;hash=3ed254af5b87b0f02392fb6ec89a04b0"></iframe>-->
@@ -126,7 +134,8 @@
         $rss->load('https://www.facebook.com/feeds/page.php?format=rss20&id=258345984251339');
         $items = $rss->getItems(); #returns all rss items
       ?>
-        <div>
+        <h4><?php echo $items[0]['pubDate']; ?></h4>
+		<div>
         <?php echo $items[0]['description']; ?>
         </div>
       </div>
@@ -141,15 +150,13 @@
           $rss->load('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576');
           $items = $rss->getItems(); #returns all rss items
       ?>
+		<h4><?php echo $items[0]['pubDate']; ?></h4>
           <div>
             <?php echo $items[0]['description']; ?>
           </div>
   		</div>
 
-      <div class="col col-md-4">
-        <h1><a href="http://www.benczuretterem.hu/" target="_blank">Bencur</a></h1>
-        <div id="bencur"> </div>
-      </div>
+      
 
     </div>
 	
