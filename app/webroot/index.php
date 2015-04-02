@@ -87,6 +87,10 @@
 
     <div class="container">
       <!-- Example row of columns -->
+	  
+	<div class="alert alert-success" role="alert">
+	  Javaslatok <a href="http://goo.gl/phT5hD" class="alert-link" target="_blank"> http://goo.gl/phT5hD </a>
+	</div>
     <div class="row">
   		<div class="col col-md-4">
   			<h1><a href="http://www.piroskavendeglo.hu/etlap/" target="_blank">Piroska</a></h1>
