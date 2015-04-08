@@ -1,3 +1,33 @@
+<?php
+//header('Cache-Control: max-age=' . (12 * 60 * 60));
+require_once 'rss_php.php';
+function myrss($link, $menu = false) {
+	$rss = new rss_php;
+	$rss->load($link);
+	$items = $rss->getItems(); #returns all rss items
+
+	$no = 0;
+	if($menu === true) {
+		for($i = 0; $i < count($items); $i++) {
+			if(strpos( mb_strtolower($items[$i]['description']), 'menü') !== false) {
+				$no = $i;
+				break;
+			}
+		}
+	}
+
+	$x = new DateTime($items[$no]['pubDate']);
+	echo '<h4>';
+	if($x->format('Y-m-d') != date('Y-m-d')) {
+		echo '<span style="background-color: #F00;">' . $items[$no]['pubDate'] . '</span>';
+	} else {
+		echo $items[$no]['pubDate'];
+	}
+	echo '</h4>';
+	echo '<div>' . str_replace('href="/', 'href="http://facebook.com/', $items[0]['description']);
+	echo '</div>';
+}
+?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -92,83 +122,46 @@
 	  Javaslatok <a href="http://goo.gl/phT5hD" class="alert-link" target="_blank"> http://goo.gl/phT5hD </a>
 	</div>
     <div class="row">
-  		<div class="col col-md-4">
-  			<h1><a href="http://www.piroskavendeglo.hu/etlap/" target="_blank">Piroska</a></h1>
-  			<div id="piroska"> </div>
-  		</div>
+		<div class="col col-md-4">
+			<h1><a href="http://www.piroskavendeglo.hu/etlap/" target="_blank">Piroska</a></h1>
+			<div id="piroska"> </div>
+		</div>
 
-      <div class="col col-md-4">
-        <h1><a href="https://www.facebook.com/pages/Musk%C3%A1tli-%C3%89tkezde/116495811806493" target="_blank">Muskátli étkezde</a></h1>
-        <!--<iframe width="400" height="400" style="border:none;" src="http://output60.rssinclude.com/output?type=iframe&amp;id=978925&amp;hash=3ed254af5b87b0f02392fb6ec89a04b0"></iframe>-->
-      <?php
-          require_once 'rss_php.php';
+		<div class="col col-md-4">
+			<h1><a href="https://www.facebook.com/pages/Musk%C3%A1tli-%C3%89tkezde/116495811806493" target="_blank">Muskátli étkezde</a></h1>
+			<?php myrss('https://www.facebook.com/feeds/page.php?id=116495811806493&format=rss20', true); ?>
+		</div>
 
-          $rss = new rss_php;
-          $rss->load('https://www.facebook.com/feeds/page.php?id=116495811806493&format=rss20');
-          $items = $rss->getItems(); #returns all rss items
-      ?>
-          <h4><?php echo $items[0]['pubDate']; ?></h4>
-		  <div>
-            <?php echo $items[0]['description']; ?>
-          </div>
-  		</div>
-		
 		<div class="col col-md-4">
 			<h1><a href="http://www.benczuretterem.hu/" target="_blank">Bencur</a></h1>
 			<div id="bencur"> </div>
-		  </div>	
-
-      
-
+		</div>
     </div>
-
+	
+	
     <div class="row">
 		<div class="col col-md-4">
 			<h1><a href="http://www.minietelbar.hu/" target="_blank">Mini Ételbár</a></h1>
 			<img style="width: 100%;" src="http://www.minietelbar.hu/menu.jpg">
 		  </div>
 		
-      <div class="col col-md-4">
-      <h1><a href="https://www.facebook.com/kefafalatozo" target="_blank">Kefa falatozó</a></h1>
-      <!--<iframe width="400" height="400" style="border:none;" src="http://output60.rssinclude.com/output?type=iframe&amp;id=978925&amp;hash=3ed254af5b87b0f02392fb6ec89a04b0"></iframe>-->
-      <?php
-        require_once 'rss_php.php';
-
-        $rss = new rss_php;
-        $rss->load('https://www.facebook.com/feeds/page.php?format=rss20&id=258345984251339');
-        $items = $rss->getItems(); #returns all rss items
-      ?>
-        <h4><?php echo $items[0]['pubDate']; ?></h4>
-		<div>
-        <?php echo $items[0]['description']; ?>
-        </div>
-      </div>
+		<div class="col col-md-4">
+			<h1><a href="https://www.facebook.com/pages/Kefa-Falatoz%C3%B3-K%C3%A1v%C3%A9z%C3%B3-Fagyiz%C3%B3/675297079184846?fref=ts" target="_blank">Kefa falatozó</a></h1>
+			<?php myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=675297079184846'); ?>
+		</div>
 
 	    <div class="col col-md-4">
-        <h1><a href="https://www.facebook.com/pages/Krinet-gyors%C3%A9tterem-%C3%A9s-k%C3%A1v%C3%A9z%C3%B3/168988876483576" target="_blank">Krinet gyorsétterem</a></h1>
-        <!--<iframe width="400" height="400" style="border:none;" src="http://output60.rssinclude.com/output?type=iframe&amp;id=978925&amp;hash=3ed254af5b87b0f02392fb6ec89a04b0"></iframe>-->
-      <?php
-          require_once 'rss_php.php';
-
-          $rss = new rss_php;
-          $rss->load('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576');
-          $items = $rss->getItems(); #returns all rss items
-      ?>
-		<h4><?php echo $items[0]['pubDate']; ?></h4>
-          <div>
-            <?php echo $items[0]['description']; ?>
-          </div>
+			<h1><a href="https://www.facebook.com/pages/Krinet-gyors%C3%A9tterem-%C3%A9s-k%C3%A1v%C3%A9z%C3%B3/168988876483576" target="_blank">Krinet gyorsétterem</a></h1>
+			<?php myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576'); ?>
   		</div>
-
-      
-
     </div>
+		
 	
 	<div class="row">
 		<div class="col col-md-4">
-        <h1><a href="http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok" target="_blank">Napfényes étterem</a></h1>
-        <div id="napfenyes"> </div>
-      </div>
+			<h1><a href="http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok" target="_blank">Napfényes étterem</a></h1>
+			<div id="napfenyes"> </div>
+		</div>
 		
 		<div class="col col-md-4">
   			<h1><a href="http://atriumetterem.hu/napi-menu/" target="_blank">Átrium étterem</a></h1>
@@ -193,6 +186,20 @@
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
+jQuery.expr[':'].regex = function(elem, index, match) {
+    var matchParams = match[3].split(','),
+        validLabels = /^(data|css):/,
+        attr = {
+            method: matchParams[0].match(validLabels) ? 
+                        matchParams[0].split(':')[0] : 'attr',
+            property: matchParams.shift().replace(validLabels,'')
+        },
+        regexFlags = 'ig',
+        regex = new RegExp(matchParams.join('').replace(/^s+|s+$/g,''), regexFlags);
+    return regex.test(jQuery(elem)[attr.method](attr.property));
+}
+
+
 $.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.benczuretterem.hu/", function (data) {
   // data is the content of the URL.
 	$page = $(data);
@@ -231,8 +238,31 @@ $.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://atrium
 	$page = $(data);
 	$("#atrium").append($("#post-19", $page));	
 });
+
+$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=https://www.facebook.com/pages/Chili-Bisztr%C3%B3/124245150953481?fref=ts", function (data) {
+  // data is the content of the URL.
+	$page = $(data);
 	
+});
 
 </script>
+
+
+
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//bakroistvan.lwr.local/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//bakroistvan.lwr.local/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
     </body>
 </html>
