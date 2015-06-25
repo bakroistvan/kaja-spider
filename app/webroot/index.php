@@ -9,7 +9,7 @@ function myrss($link, $menu = false) {
 	$no = 0;
 	if($menu === true) {
 		for($i = 0; $i < count($items); $i++) {
-			if(strpos( mb_strtolower($items[$i]['description']), 'menü') !== false) {
+			if(strpos( mb_strtolower($items[$i]['description']), 'menü') !== FALSE) {
 				$no = $i;
 				break;
 			}
@@ -17,8 +17,9 @@ function myrss($link, $menu = false) {
 	}
 
 	$x = new DateTime($items[$no]['pubDate']);
+	$yest = new DateTime('yesterday 18:00');
 	echo '<h4>';
-	if($x->format('Y-m-d') != date('Y-m-d')) {
+	if($x->getTimestamp() < $yest->getTimestamp()) {
 		echo '<span style="background-color: #F00;">' . $items[$no]['pubDate'] . '</span>';
 	} else {
 		echo $items[$no]['pubDate'];
@@ -27,6 +28,33 @@ function myrss($link, $menu = false) {
 	echo '<div>' . str_replace('href="/', 'href="http://facebook.com/', $items[0]['description']);
 	echo '</div>';
 }
+
+if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+	$ip = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+	$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+	$ip = $_SERVER['REMOTE_ADDR'];
+}
+
+if($ip != $_SERVER['SERVER_ADDR']) {
+	$myfile = fopen("logs.txt", "a");
+	$txt = date('Y-m-d H:i:s') . "\t" . $ip . "\t" . gethostbyaddr($ip);
+	fwrite($myfile, "\n". $txt);
+	fclose($myfile);
+}
+
+
+$appid = null;
+switch ($_SERVER['SERVER_NAME']) {
+  case 'bakroistvan.lwr.local':
+    $appid = '839302366159530';
+    break;
+  case 'lwrkaja.pe.hu':
+    $appid = '709627479156746';
+    break;
+}
+
 ?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -38,16 +66,11 @@ function myrss($link, $menu = false) {
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title></title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-
             .weekly-menu-content {
               display: inline-block;
               background-color: #ffffff;
@@ -73,6 +96,14 @@ function myrss($link, $menu = false) {
               background-color: #eeeeee;
             }
 
+            img {
+              width: 100%;
+            }
+
+            .minim {
+              width: 33%;
+            }
+
 
 
             #piroska * {
@@ -84,52 +115,54 @@ function myrss($link, $menu = false) {
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
 
+        <script type="text/javascript">
+          var appId = '<?php echo $appid; ?>';
+        </script>
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">bakró @ <?php echo $_SERVER['SERVER_NAME']; ?></a>
-        </div>
-        <!--<div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
 
-    <div class="container">
+<nav class="navbar navbar-default">
+<div class="container">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">bakró @ <?php echo $_SERVER['SERVER_NAME']; ?></a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav">
+            <li><a href="https://graph.facebook.com/oauth/authorize?client_id=<?php echo $appid; ?>&redirect_uri=http://<?php echo $_SERVER['SERVER_NAME']; ?>&display=touch">FB Login</a></li>
+            <li><a target="_blank" href="http://goo.gl/phT5hD">Javaslatok</a></li>
+          </ul>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
       <!-- Example row of columns -->
-	  
-	<div class="alert alert-success" role="alert">
-	  Javaslatok <a href="http://goo.gl/phT5hD" class="alert-link" target="_blank"> http://goo.gl/phT5hD </a>
-	</div>
-    <div class="row">
+  
+
+  <div id="res" class="row">
 		<div class="col col-md-4">
 			<h1><a href="http://www.piroskavendeglo.hu/etlap/" target="_blank">Piroska</a></h1>
 			<div id="piroska"> </div>
 		</div>
 
-		<div class="col col-md-4">
+		<div id="muskatli" class="col col-md-4">
 			<h1><a href="https://www.facebook.com/pages/Musk%C3%A1tli-%C3%89tkezde/116495811806493" target="_blank">Muskátli étkezde</a></h1>
-			<?php myrss('https://www.facebook.com/feeds/page.php?id=116495811806493&format=rss20', true); ?>
+			<?php //myrss('https://www.facebook.com/feeds/page.php?id=116495811806493&format=rss20', true); ?>
 		</div>
 
 		<div class="col col-md-4">
@@ -139,25 +172,33 @@ function myrss($link, $menu = false) {
     </div>
 	
 	
-    <div class="row">
+  <div class="row">
 		<div class="col col-md-4">
 			<h1><a href="http://www.minietelbar.hu/" target="_blank">Mini Ételbár</a></h1>
 			<img style="width: 100%;" src="http://www.minietelbar.hu/menu.jpg">
 		  </div>
 		
-		<div class="col col-md-4">
+		<div id="kefa" class="col col-md-4">
 			<h1><a href="https://www.facebook.com/pages/Kefa-Falatoz%C3%B3-K%C3%A1v%C3%A9z%C3%B3-Fagyiz%C3%B3/675297079184846?fref=ts" target="_blank">Kefa falatozó</a></h1>
-			<?php myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=675297079184846'); ?>
+			<?php //myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=675297079184846'); ?>
 		</div>
 
-	    <div class="col col-md-4">
-			<h1><a href="https://www.facebook.com/pages/Krinet-gyors%C3%A9tterem-%C3%A9s-k%C3%A1v%C3%A9z%C3%B3/168988876483576" target="_blank">Krinet gyorsétterem</a></h1>
-			<?php myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576'); ?>
-  		</div>
+    <div id="chili" class="col col-md-4">
+      <h1><a href="https://www.facebook.com/pages/Chili-Bisztr%C3%B3/124245150953481?ref=ts&fref=ts" target="_blank">Chili Bisztró</a></h1>
+      <?php //myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576', true); ?>
     </div>
+	    
+  </div>
 		
 	
 	<div class="row">
+    <div id="krinet" class="col col-md-4">
+      <h1><a href="https://www.facebook.com/pages/Krinet-gyors%C3%A9tterem-%C3%A9s-k%C3%A1v%C3%A9z%C3%B3/168988876483576" target="_blank">Krinet gyorsétterem</a></h1>
+      <?php //myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576', true); ?>
+      </div>
+    
+
+
 		<div class="col col-md-4">
 			<h1><a href="http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok" target="_blank">Napfényes étterem</a></h1>
 			<div id="napfenyes"> </div>
@@ -206,25 +247,28 @@ $.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.be
 	$("#bencur").append($("#weekly-menu-content", $page));	
 });
 
-$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/etlap/", function (data) {
+$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/etlap", function (data) {
   // data is the content of the URL.
 	$page = $(data);
-  $("#piroska").append($(".menuRow:first", $page).parent().attr("id"));
-  $("#piroska").append($(".menuRow:first", $page));
+	$("#piroska").append($(".menuRow:first", $page).parent().attr("id"));
+	$("#piroska").append($(".menuRow:first", $page));
 	
-  $("#piroska").find(".price").remove();
-  $("#piroska").find(".photoRow").remove();
+	$("#piroska").find(".price").remove();
+	$("#piroska").find(".photoRow").remove();
   
-  $("#piroska").find('h4').replaceWith(function() {
-            return '<h5>' + $(this).text() + '</h5>';
-  });
-
-	//var o_href = $("#piroska > article > a").attr('href');
-	//$("#piroska > article > a").attr('href', "http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/" + o_href);
+	$("#piroska").find('h4').replaceWith(function() {
+		return '<h5>' + $(this).text() + '</h5>';
+	});
 	
-	//var o_src = $("#piroska > article > a > img").attr('src');
-	//$("#piroska > article > a > img").attr('src', "http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/" + o_src);
-	//$("#piroska > article > a > img").removeAttr( "width" )
+	// fooldal
+	//$("#piroska").append($("#content > section:first", $page));
+	
+	var o_href = $("#piroska > section > article > a").attr('href');
+	$("#piroska > section > article > a").attr('href', "http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/" + o_href);
+	
+	var o_src = $("#piroska > section > article > a > img").attr('src');
+	$("#piroska > section > article > a > img").attr('src', "http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.piroskavendeglo.hu/" + o_src);
+	$("#piroska > section > article > a > img").removeAttr( "width" )
 });
 
 $.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok/140-napi-ajanlatok-napfenyes-falatozo", function (data) {
