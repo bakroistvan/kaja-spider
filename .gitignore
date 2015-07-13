@@ -1,2 +1,3 @@
 /vendor/*
 /app/webroot/assets
+app/webroot/logs.txt

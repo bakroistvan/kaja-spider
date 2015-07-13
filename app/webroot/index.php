@@ -96,12 +96,12 @@ switch ($_SERVER['SERVER_NAME']) {
               background-color: #eeeeee;
             }
 
-            img {
+            #tbody img {
               width: 100%;
             }
 
             .minim {
-              width: 33%;
+              width: 33% !important;
             }
 
 
@@ -126,7 +126,10 @@ switch ($_SERVER['SERVER_NAME']) {
         <![endif]-->
 
 <nav class="navbar navbar-default">
-<div class="container">
+<div class="container-fluid">
+  <a class="navbar-brand" href="#">
+    <img style="max-height: 25px; margin-right: -10px;" alt="Kaja" src="/img/spoon.gif">
+  </a>
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -142,7 +145,12 @@ switch ($_SERVER['SERVER_NAME']) {
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <ul class="nav navbar-nav">
-            <li><a href="https://graph.facebook.com/oauth/authorize?client_id=<?php echo $appid; ?>&redirect_uri=http://<?php echo $_SERVER['SERVER_NAME']; ?>&display=touch">FB Login</a></li>
+            <li>
+              <a href="https://graph.facebook.com/oauth/authorize?client_id=<?php echo $appid; ?>&redirect_uri=http://<?php echo $_SERVER['SERVER_NAME']; ?>&display=touch">
+                  <img style="height: 20px;" alt="Get FB Permission" src="/img/fbpermission.png">
+                  Get FB Permission
+              </a>
+            </li>
             <li><a target="_blank" href="http://goo.gl/phT5hD">Javaslatok</a></li>
           </ul>
     </ul>
@@ -150,64 +158,73 @@ switch ($_SERVER['SERVER_NAME']) {
 </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container">
+
+<div class="alert alert-info" role="alert">
+  Facebook feed lekéréséhez engedélyezned kell a WEBapp-ot a <i><a href="https://graph.facebook.com/oauth/authorize?client_id=<?php echo $appid; ?>&redirect_uri=http://<?php echo $_SERVER['SERVER_NAME']; ?>&display=touch">
+                  <img style="height: 20px;" alt="Get FB Permission" src="/img/fbpermission.png">
+                  Get FB Permission
+              </a></i> linken, majd frissítened az oldalt.
+</div>
+
+<div id="tbody" class="container-fluid">
       <!-- Example row of columns -->
   
 
   <div id="res" class="row">
-		<div class="col col-md-4">
-			<h1><a href="http://www.piroskavendeglo.hu/etlap/" target="_blank">Piroska</a></h1>
-			<div id="piroska"> </div>
-		</div>
-
-		<div id="muskatli" class="col col-md-4">
+		<div id="muskatli" class="col col-md-3">
 			<h1><a href="https://www.facebook.com/pages/Musk%C3%A1tli-%C3%89tkezde/116495811806493" target="_blank">Muskátli étkezde</a></h1>
 			<?php //myrss('https://www.facebook.com/feeds/page.php?id=116495811806493&format=rss20', true); ?>
 		</div>
 
-		<div class="col col-md-4">
+		<div class="col col-md-3">
 			<h1><a href="http://www.benczuretterem.hu/" target="_blank">Bencur</a></h1>
 			<div id="bencur"> </div>
 		</div>
-    </div>
-	
-	
-  <div class="row">
-		<div class="col col-md-4">
-			<h1><a href="http://www.minietelbar.hu/" target="_blank">Mini Ételbár</a></h1>
-			<img style="width: 100%;" src="http://www.minietelbar.hu/menu.jpg">
-		  </div>
-		
-		<div id="kefa" class="col col-md-4">
-			<h1><a href="https://www.facebook.com/pages/Kefa-Falatoz%C3%B3-K%C3%A1v%C3%A9z%C3%B3-Fagyiz%C3%B3/675297079184846?fref=ts" target="_blank">Kefa falatozó</a></h1>
-			<?php //myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=675297079184846'); ?>
-		</div>
 
-    <div id="chili" class="col col-md-4">
+    
+
+    <div id="kefa" class="col col-md-3">
+      <h1><a href="https://www.facebook.com/pages/Kefa-Falatoz%C3%B3-K%C3%A1v%C3%A9z%C3%B3-Fagyiz%C3%B3/675297079184846?fref=ts" target="_blank">Kefa falatozó</a></h1>
+      <?php //myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=675297079184846'); ?>
+    </div>
+
+    <div id="chili" class="col col-md-3">
       <h1><a href="https://www.facebook.com/pages/Chili-Bisztr%C3%B3/124245150953481?ref=ts&fref=ts" target="_blank">Chili Bisztró</a></h1>
       <?php //myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576', true); ?>
     </div>
-	    
   </div>
+	
+	
 		
 	
 	<div class="row">
-    <div id="krinet" class="col col-md-4">
+    <div class="col col-md-3">
+      <h1><a href="http://www.minietelbar.hu/" target="_blank">Mini Ételbár</a></h1>
+      <img style="width: 100%;" src="http://www.minietelbar.hu/menu.jpg">
+    </div>
+
+    <div class="col col-md-3">
+      <h1><a href="http://www.piroskavendeglo.hu/etlap/" target="_blank">Piroska</a></h1>
+      <div id="piroska"> </div>
+    </div>
+
+
+    <div id="krinet" class="col col-md-3">
       <h1><a href="https://www.facebook.com/pages/Krinet-gyors%C3%A9tterem-%C3%A9s-k%C3%A1v%C3%A9z%C3%B3/168988876483576" target="_blank">Krinet gyorsétterem</a></h1>
       <?php //myrss('https://www.facebook.com/feeds/page.php?format=rss20&id=168988876483576', true); ?>
       </div>
     
-
-
-		<div class="col col-md-4">
-			<h1><a href="http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok" target="_blank">Napfényes étterem</a></h1>
-			<div id="napfenyes"> </div>
-		</div>
-		
-		<div class="col col-md-4">
+		<div class="col col-md-3">
   			<h1><a href="http://atriumetterem.hu/napi-menu/" target="_blank">Átrium étterem</a></h1>
   			<div id="atrium"> </div>
-  		</div>
+  	</div>
+
+
+    <!--<div class="col col-md-4">
+      <h1><a href="http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok" target="_blank">Napfényes étterem</a></h1>
+      <div id="napfenyes"> </div>
+    </div>-->
+    
 	</div>
 	
 	
@@ -271,11 +288,12 @@ $.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.pi
 	$("#piroska > section > article > a > img").removeAttr( "width" )
 });
 
-$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok/140-napi-ajanlatok-napfenyes-falatozo", function (data) {
+/*$.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://www.napfenyesetterem.hu/vegan-vegetarianus-napi-ajanlatok/140-napi-ajanlatok-napfenyes-falatozo", function (data) {
   // data is the content of the URL.
   $page = $(data);
   $("#napfenyes").append($(".article-content > table > tbody > tr > td:first", $page));
 });
+*/
 
 $.get("http://<?php echo $_SERVER['SERVER_NAME']; ?>/proxy.php?url=http://atriumetterem.hu/napi-menu/", function (data) {
   // data is the content of the URL.

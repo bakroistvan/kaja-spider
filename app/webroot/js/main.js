@@ -1,3 +1,12 @@
+function old(now) {
+	var yesterday = new Date();
+	yesterday.setDate(yesterday.getDate() - 1);
+	yesterday.setHours(18);
+	yesterday.setMinutes(0);
+
+	return now > yesterday;
+}
+
 window.fbAsyncInit = function() {
     FB.init({
 		appId      : appId,
@@ -21,6 +30,9 @@ window.fbAsyncInit = function() {
 				if (response && !response.error) {
 					/* handle the result */
 					console.log(response);
+					var date = new Date(response.data[0].created_time);
+					var style = old(date) ? '' : 'background: red';
+					$('#muskatli').append('<span style="' + style + '">' + response.data[0].created_time + '</span></br>');
 					$('#muskatli').append(response.data[0].message.replace(new RegExp("\n", 'g'), '</br>') + '</br>');
 				}
 		    }
@@ -31,6 +43,9 @@ window.fbAsyncInit = function() {
 				if (response && !response.error) {
 					/* handle the result */
 					console.log(response);
+					var date = new Date(response.data[0].created_time);
+					var style = old(date) ? '' : 'background: red';
+					$('#kefa').append('<span style="' + style + '">' + response.data[0].created_time + '</span></br>');
 					$('#kefa').append(response.data[0].message.replace(new RegExp("\n", 'g'), '</br>') + '</br>');
 
 					for(var i = 0; i < response.data[0].attachments.data[0].subattachments.data.length; i++) {
@@ -46,15 +61,21 @@ window.fbAsyncInit = function() {
 				if (response && !response.error) {
 					/* handle the result */
 					console.log(response);
-					$('#chili').append(response.data[0].message.replace(new RegExp("\n", 'g'), '</br>') + '</br>');
-
-					for(var i = 0; i < response.data[0].attachments.data[0].subattachments.data.length; i++) {
-						var im =response.data[0].attachments.data[0].subattachments.data[i].media.image.src;
-						$('#chili').append('<a target=_blank" href="' + im + '"><img src="' + im + '"></a>');
-					}
+					var date = new Date(response.data[0].created_time);
+					var style = old(date) ? '' : 'background: red';
+					$('#chili').append('<span style="' + style + '">' + response.data[0].created_time + '</span></br>');
 					
+					try {
+						$('#chili').append(response.data[0].message.replace(new RegExp("\n", 'g'), '</br>') + '</br>');
+						
+						for(var i = 0; i < response.data[0].attachments.data[0].subattachments.data.length; i++) {
+							var im =response.data[0].attachments.data[0].subattachments.data[i].media.image.src;
+							$('#chili').append('<a target=_blank" href="' + im + '"><img src="' + im + '"></a>');
+						}
+					} catch(err) {;}
 					
-
+					$('#chili').append('<a target=_blank" href="' + response.data[0].attachments.data[0].media.image.src + '"><img src="' + response.data[0].attachments.data[0].media.image.src + '"></a>');
+					
 				}
 		    }
 		);
@@ -64,6 +85,9 @@ window.fbAsyncInit = function() {
 				if (response && !response.error) {
 					/* handle the result */
 					console.log(response);
+					var date = new Date(response.data[0].created_time);
+					var style = old(date) ? '' : 'background: red';
+					$('#krinet').append('<span style="' + style + '">' + response.data[0].created_time + '</span></br>');
 					$('#krinet').append(response.data[0].message.replace(new RegExp("\n", 'g'), '</br>') + '</br>');
 				}
 		    }
